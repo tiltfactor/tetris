@@ -1,10 +1,10 @@
-// strokeText stroketext.js version 1.02, Wed Mar 18 12:00:00 CEST 2009 
+// strokeText stroketext.js version 1.02, Wed Mar 18 12:00:00 CEST 2009
 
-// (c) 2008 by Christian Effenberger. All Rights reserved. 
+// (c) 2008 by Christian Effenberger. All Rights reserved.
 // Copyright (c) 2008 Christian Effenberger (http://text.netzgesta.de)
 //
 // strokeText is freely distributable under the terms of an GPL-style license.
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -12,7 +12,7 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
 //
@@ -28,14 +28,14 @@
 
 function check_strokeTextCapability() {
 	if(document.namespaces['v']==null) {
-		var e=["shape","shapetype","group","background","path","formulas","handles","fill","stroke","shadow","textbox","textpath","imagedata","line","polyline","curve","roundrect","oval","rect","arc","image"],s=document.createStyleSheet(); 
+		var e=["shape","shapetype","group","background","path","formulas","handles","fill","stroke","shadow","textbox","textpath","imagedata","line","polyline","curve","roundrect","oval","rect","arc","image"],s=document.createStyleSheet();
 		for(var i=0; i<e.length; i++) {s.addRule("v\\:"+e[i],"behavior: url(#default#VML);");} document.namespaces.add("v","urn:schemas-microsoft-com:vml");
-	} 
+	}
 	if(typeof get_strokeText == 'function' && document.namespaces['v'] != null) {return true;}else {return false;}
 }
 function get_boundingBox(x,y,baseline,lineheight,linewidth,weight,color,opacity,rotation) {
 	rotation=typeof(rotation)!='undefined'?rotation:0; color=typeof(color)!='undefined'?color:'#000000'; opacity=typeof(opacity)!='undefined'?opacity:1; id=typeof(id)!='undefined'?'id="'+id+'"':''; var w=parseInt(linewidth), b=parseInt(baseline), h=parseInt(lineheight);
-	return '<v:shape '+id+' filled="f" stroked="t" coordorigin="0,0" coordsize="'+w+','+h+'" path="m 0,'+b+' l 0,0,'+w+',0,'+w+','+b+',0,'+b+',0,'+h+','+w+','+h+','+w+','+b+' e" style="rotation:'+rotation+';position:absolute;margin:0px;top:'+Math.round(y)+'px;left:'+Math.round(x)+'px;width:'+w+'px;height:'+h+'px;"><v:stroke color="'+color+'" opacity="'+opacity+'" weight="'+weight+'" /></v:shape>';	
+	return '<v:shape '+id+' filled="f" stroked="t" coordorigin="0,0" coordsize="'+w+','+h+'" path="m 0,'+b+' l 0,0,'+w+',0,'+w+','+b+',0,'+b+',0,'+h+','+w+','+h+','+w+','+b+' e" style="rotation:'+rotation+';position:absolute;margin:0px;top:'+Math.round(y)+'px;left:'+Math.round(x)+'px;width:'+w+'px;height:'+h+'px;"><v:stroke color="'+color+'" opacity="'+opacity+'" weight="'+weight+'" /></v:shape>';
 }
 function get_strokeText(string,x,y,size,weight,width,space,font,color,opacity,rotation,id) {
 	function qC(cX,cY,CPx,CPy,aX,aY) {var t = new Array(6); t[0]=cX+2.0/3.0*(CPx-cX); t[1]=cY+2.0/3.0*(CPy-cY); t[2]=t[0]+(aX-cX)/3.0; t[3]=t[1]+(aY-cY)/3.0; t[4]=aX; t[5]=aY; return t;}
@@ -46,28 +46,28 @@ function get_strokeText(string,x,y,size,weight,width,space,font,color,opacity,ro
 	var spc=Math.max(Math.min(space,1000),10)/100,mx=((mag*16*faw)*spc)-(mag*16*faw),lw=(fac*mag);x=0;y=size;
 	var ww=Math.round(get_textWidth(string,size,width,space,font)), hh=Math.round(get_textHeight(size));
 	var out='<v:shape '+id+' filled="f" stroked="t" coordorigin="0,0" coordsize="'+parseInt(ww*f)+','+parseInt(hh*f)+'"';
-	for(i=0; i<len; i++) { c=strokeFont[font][string.charAt(i)]; if(!c) {continue;} o=0; 
+	for(i=0; i<len; i++) { c=strokeFont[font][string.charAt(i)]; if(!c) {continue;} o=0;
 		for(j=0; j<c.n; j++) {
 			if(typeof(c.d[o])!="string") {o++; continue;} p=c.d[o]; o++; a=c.d[o];
 			if(p=="m") {path+=' m '+parseInt((x+a[0]*mag*faw)*f)+','+parseInt((y-a[1]*mag)*f); o++;}else
-			if(p=="q") {z=c.d[o-2]; o++; b=c.d[o]; k=qC(z[0],z[1],a[0],a[1],b[0],b[1]); path+=' c '+parseInt((x+k[0]*mag*faw)*f)+','+parseInt((y-k[1]*mag)*f)+','+parseInt((x+k[2]*mag*faw)*f)+','+parseInt((y-k[3]*mag)*f)+','+parseInt((x+k[4]*mag*faw)*f)+','+parseInt((y-k[5]*mag)*f); o++;}else 
+			if(p=="q") {z=c.d[o-2]; o++; b=c.d[o]; k=qC(z[0],z[1],a[0],a[1],b[0],b[1]); path+=' c '+parseInt((x+k[0]*mag*faw)*f)+','+parseInt((y-k[1]*mag)*f)+','+parseInt((x+k[2]*mag*faw)*f)+','+parseInt((y-k[3]*mag)*f)+','+parseInt((x+k[4]*mag*faw)*f)+','+parseInt((y-k[5]*mag)*f); o++;}else
 			if(p=="b") {o++; b=c.d[o]; o++; z=c.d[o]; path+=' c '+parseInt((x+a[0]*mag*faw)*f)+','+parseInt((y-a[1]*mag)*f)+','+parseInt((x+a[0]*mag*faw)*f)+','+parseInt((y-a[1]*mag)*f)+','+parseInt((x+z[0]*mag*faw)*f)+','+parseInt((y-z[1]*mag)*f); o++;}else
 			if(p=="l") {path+=' l '+parseInt((x+a[0]*mag*faw)*f)+','+parseInt((y-a[1]*mag)*f); o++; while(typeof(c.d[o])!="string" && o<c.d.length) {a=c.d[o]; path+=' l '+parseInt((x+a[0]*mag*faw)*f)+','+parseInt((y-a[1]*mag)*f); o++;}}
 		} x+=((c.w*faw)*mag)+mx;
-	} out+=' path="'+path+' e" style="rotation:'+rotation+';position:absolute;margin:0px;top:'+Math.round(yy)+'px;left:'+Math.round(xx)+'px;width:'+ww+'px;height:'+hh+'px;"><v:stroke color="'+color+'" opacity="'+opacity+'" weight="'+lw+'" miterlimit="0" endcap="round" joinstyle="round" /></v:shape>';	
+	} out+=' path="'+path+' e" style="rotation:'+rotation+';position:absolute;margin:0px;top:'+Math.round(yy)+'px;left:'+Math.round(xx)+'px;width:'+ww+'px;height:'+hh+'px;"><v:stroke color="'+color+'" opacity="'+opacity+'" weight="'+lw+'" miterlimit="0" endcap="round" joinstyle="round" /></v:shape>';
 	return out;
 }
-function get_baseLine(size) {return size;} 
-function get_textHeight(size) {size=typeof(size)!='undefined'?size:12; return 32*(size/25);} 
+function get_baseLine(size) {return size;}
+function get_textHeight(size) {size=typeof(size)!='undefined'?size:12; return 32*(size/25);}
 function get_textWidth(string,size,width,space,font) {
 	size=typeof(size)!='undefined'?size:12; width=typeof(width)!='undefined'?width:100; space=typeof(space)!='undefined'?space:100; string=typeof(string)!='undefined'?string:' ';
-	font=typeof(font)!='undefined'?font:"sans-serif"; var total=0,len=string.length,mg=size/25.0,fw=Math.max(Math.min(width,400),10)/100,sp=Math.max(Math.min(space,1000),10)/100,m=((mg*16*fw)*sp)-(mg*16*fw); 	
+	font=typeof(font)!='undefined'?font:"sans-serif"; var total=0,len=string.length,mg=size/25.0,fw=Math.max(Math.min(width,400),10)/100,sp=Math.max(Math.min(space,1000),10)/100,m=((mg*16*fw)*sp)-(mg*16*fw);
 	for(var i=0; i<len; i++) {var c=strokeFont[font][string.charAt(i)]; if(c) total += ((c.w*fw)*mg)+m;}return total-(m);
 }
 function get_widthText(string,width,size,fontwidth,space,font) {
 	size=typeof(size)!='undefined'?size:12; fontwidth=typeof(fontwidth)!='undefined'?fontwidth:100; space=typeof(space)!='undefined'?space:100; string=typeof(string)!='undefined'?string:' '; width=typeof(width)!='undefined'?width:100;
-	font=typeof(font)!='undefined'?font:"sans-serif"; var cur=0,total=0,len=string.length,mg=size/25.0,fw=Math.max(Math.min(fontwidth,400),10)/100,sp=Math.max(Math.min(space,1000),10)/100,m=((mg*16*fw)*sp)-(mg*16*fw); 	
-	for(var i=0; i<len; i++) {var c=strokeFont[font][string.charAt(i)]; if(c) {cur = ((c.w*fw)*mg)+m; if((total+cur-(m)) <= width) {total += cur;}else {break; }}else {break; }} return string.substring(0,i); 
+	font=typeof(font)!='undefined'?font:"sans-serif"; var cur=0,total=0,len=string.length,mg=size/25.0,fw=Math.max(Math.min(fontwidth,400),10)/100,sp=Math.max(Math.min(space,1000),10)/100,m=((mg*16*fw)*sp)-(mg*16*fw);
+	for(var i=0; i<len; i++) {var c=strokeFont[font][string.charAt(i)]; if(c) {cur = ((c.w*fw)*mg)+m; if((total+cur-(m)) <= width) {total += cur;}else {break; }}else {break; }} return string.substring(0,i);
 }
 function draw_boundingBox(ctx,x,y,baseline,lineheight,linewidth) {ctx.strokeRect(x,y+baseline,linewidth,lineheight-baseline); ctx.strokeRect(x,y,linewidth,baseline);}
 function do_drawText(string,x,y,size,weight,width,space,font) {
@@ -76,12 +76,12 @@ function do_drawText(string,x,y,size,weight,width,space,font) {
 	var i=0,j=0,a,b,z,c,p,o,len=string.length,mag=size/25.0,fac=Math.max(Math.min(weight,400),1)/40, faw=Math.max(Math.min(width,400),10)/100;
 	var spc=Math.max(Math.min(space,1000),10)/100,mx=((mag*16*faw)*spc)-(mag*16*faw),lw=this.lineWidth, ml=this.miterLimit, lj=this.lineJoin, lc=this.lineCap;
 	this.lineWidth=(fac*mag); this.miterLimit=0; this.lineJoin="round"; this.lineCap="round";
-	for(i=0; i<len; i++) { c=strokeFont[font][string.charAt(i)]; if(!c) {continue;} o=0; this.beginPath(); 
+	for(i=0; i<len; i++) { c=strokeFont[font][string.charAt(i)]; if(!c) {continue;} o=0; this.beginPath();
 		for(j=0; j<c.n; j++) {
 			if(typeof(c.d[o])!="string") {o++; continue;} p=c.d[o]; o++; a=c.d[o];
 			if(p=="m") {this.moveTo(x+a[0]*mag*faw, y-a[1]*mag); o++;}else
-			if(p=="q") {o++; b=c.d[o]; this.quadraticCurveTo(x+a[0]*mag*faw, y-a[1]*mag, x+b[0]*mag*faw, y-b[1]*mag); o++;}else 
-			if(p=="b") {o++; b=c.d[o]; o++; z=c.d[o]; this.bezierCurveTo(x+a[0]*mag*faw, y-a[1]*mag, x+b[0]*mag*faw, y-b[1]*mag, x+z[0]*mag*faw, y-z[1]*mag); o++;}else 
+			if(p=="q") {o++; b=c.d[o]; this.quadraticCurveTo(x+a[0]*mag*faw, y-a[1]*mag, x+b[0]*mag*faw, y-b[1]*mag); o++;}else
+			if(p=="b") {o++; b=c.d[o]; o++; z=c.d[o]; this.bezierCurveTo(x+a[0]*mag*faw, y-a[1]*mag, x+b[0]*mag*faw, y-b[1]*mag, x+z[0]*mag*faw, y-z[1]*mag); o++;}else
 			if(p=="l") {this.lineTo(x+a[0]*mag*faw, y-a[1]*mag); o++; while(typeof(c.d[o])!="string" && o<c.d.length) {a=c.d[o]; this.lineTo(x+a[0]*mag*faw, y-a[1]*mag); o++;}}
 		} this.stroke(); x+=((c.w*faw)*mag)+mx;
 	} this.lineWidth=lw; this.miterLimit=ml; this.lineJoin=lj; this.lineCap=lc;
@@ -122,7 +122,7 @@ strokeFont["sans-serif"] = {
 	'<': {w:24,n:2,d:['m',[20,18],'l',[4,9],[20,0]]},
 	'=': {w:26,n:4,d:['m',[4,12],'l',[22,12],'m',[4,6],'l',[22,6]]},
 	'>': {w:24,n:2,d:['m',[4,18],'l',[20,9],[4,0]]},
-	'?': {w:18,n:8,d:['m',[3,16],'q',[3,21],[9,21],'q',[15,21],[15,16],'q',[15,11],[10,11],'q',[9,11],[9,10],'l',[9,7],'m',[9,2],'l',[8,1],[9,0],[10,1],[9,2]]},	
+	'?': {w:18,n:8,d:['m',[3,16],'q',[3,21],[9,21],'q',[15,21],[15,16],'q',[15,11],[10,11],'q',[9,11],[9,10],'l',[9,7],'m',[9,2],'l',[8,1],[9,0],[10,1],[9,2]]},
 	'@': {w:27,n:17,d:['m',[21,3],'q',[20,1],[14,0],'l',[13,0],'q',[4,1],[3,10],'l',[3,11],'q',[4,20],[13,21],'l',[14,21],'q',[23,20],[24,11],'l',[24,10],'q',[24,6],[20,6],'q',[17,6],[18,10],'q',[18,6],[13,6],'q',[8,6],[9,11],'q',[10,15],[14,15],'q',[19,15],[18,10],'m',[18,10],'l',[19,14]]},
 	'A': {w:18,n:6,d:['m',[1,0],'l',[9,21],[17,0],'m',[4,7],'l',[14,7]]},
 	'B': {w:21,n:9,d:['m',[4,11],'l',[12,11],'m',[13,0],'l',[4,0],[4,21],[12,21],'q',[17,21],[17,16],'q',[17,11],[12,11],'q',[18,11],[18,6],'l',[18,5],'q',[18,0],[13,0]]},
@@ -217,7 +217,7 @@ strokeFont["sans-serif"] = {
 	'¼': {w:24,n:6,d:['m',[4,19],'l',[6,21],[6,11],'m',[16,15],'l',[6,5],'m',[19,0],'l',[19,10],[14,4],[20,4]]},
 	'½': {w:24,n:10,d:['m',[4,19],'l',[6,21],[6,11],'m',[16,15],'l',[6,5],'m',[20,0],'l',[14,0],'q',[14,4],[17,4],'q',[20,4],[20,7],'q',[20,10],[17,10],'q',[14,10],[14,7]]},
 	'¾': {w:24,n:10,d:['m',[4,14],'q',[4,11],[7,11],'q',[10,11],[10,14],'q',[10,17],[7,17],'l',[10,21],[4,21],'m',[18,15],'l',[8,5],'m',[19,0],'l',[19,10],[14,4],[20,4]]},
-	'¿': {w:18,n:7,d:['m',[9,21],'l',[8,20],[9,19],[10,20],[9,21],'m',[9,14],'l',[9,10],'q',[3,10],[3,5],'q',[3,0],[9,0],'q',[15,0],[15,5]]},	
+	'¿': {w:18,n:7,d:['m',[9,21],'l',[8,20],[9,19],[10,20],[9,21],'m',[9,14],'l',[9,10],'q',[3,10],[3,5],'q',[3,0],[9,0],'q',[15,0],[15,5]]},
 	'À': {w:18,n:6,d:['m',[7,25],'l',[10,23],'m',[1,0],'l',[9,21],[17,0],'m',[4,7],'l',[14,7]]},
 	'Á': {w:18,n:6,d:['m',[8,23],'l',[11,25],'m',[1,0],'l',[9,21],[17,0],'m',[4,7],'l',[14,7]]},
 	'Â': {w:18,n:6,d:['m',[7,23],'l',[9,25],[11,23],'m',[1,0],'l',[9,21],[17,0],'m',[4,7],'l',[14,7]]},
