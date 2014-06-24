@@ -469,6 +469,7 @@ function gameWin() {
 function gameOver() {
   drawMessage("Game Over", 1.45);
   setPause(true);
+  sendLog("game over");
   //Cleanup
 
 }
@@ -509,6 +510,7 @@ function fixPiece() {
   }
   }
   drawBoard(board,document.getElementById('board_canvas').getContext('2d'));
+  logEvent("board", board.slice());
   // will hardcode this behavior for now
   clearRowCheck(pieceY,tetrominos[curPiece][curRotation].length);
   next();
@@ -713,6 +715,10 @@ function keydownfunc(e) {
   else return;
   var keychar = String.fromCharCode(keynum);
   //document.title = keynum;
+  var action = getAction(keynum);
+  if (action) {
+    logEvent("action", action);
+  }
 
   if (keychar == 'P') {
     if (paused) unPause();
@@ -757,6 +763,116 @@ function keyupfunc(e) {
   }
 
 }
+
+/* Functions for event logging */
+function getAction(keynum) {
+  var actionNames = ["left", null, "right", "down", "rot-right", "rot-left", "drop", null, null, null, null, "pause"];
+  var fullButtonList = buttonList.slice();
+  fullButtonList.push([80]);
+  var i;
+  for (i=0;i<fullButtonList.length;i++) {
+    var j;
+    for (j=0;j<fullButtonList[i].length;j++) {
+      if (keynum == fullButtonList[i][j]) {
+        return actionNames[i];
+      }
+    }
+  }
+  return null;
+}
+
+var log = {
+  events : []
+};
+var logSent = false;
+logEvent("start");
+window.onbeforeunload = function() {
+  sendLog("close window");
+}
+
+function logEvent(type, details) {
+  log.events.push({
+    timestamp : new Date().getTime(),
+    type : type,
+    details : details
+  });
+}
+
+function sendLog(details) {
+  if (logSent) {
+    return;
+  }
+
+  logEvent("quit", details);
+
+  var parts = document.URL.split("/");
+  var url = "";
+  for (var i = 0; i < parts.length - 1; i++) {
+    url += (parts[i] + "/");
+  }
+  url += "index.php";
+  var params = "data=" + encodeURIComponent(JSON.stringify(log));
+  var xhr = createRequest();
+  if (!xhr) {
+    throw new Error('XHR not supported');
+  }
+  xhr.open("POST", url);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4)
+      console.log(xhr.response);
+  }
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  //xhr.setRequestHeader("Content-length", params.length);
+  //xhr.setRequestHeader("Connection", "close");
+  xhr.send(params);
+  logSent = true;
+}
+
+/*
+ * Cross-browser compatibile XHR creation
+ *  by Dr. M Elkstein
+ *  http://rest.elkstein.org/2008/02/using-rest-in-javascript.html
+ */
+function createRequest() {
+  var result = null;
+  if (window.XMLHttpRequest) {
+    // FireFox, Safari, etc.
+    result = new XMLHttpRequest();
+  }
+  else if (window.ActiveXObject) {
+    // MSIE
+    result = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  else {
+    // No known mechanism -- consider aborting the application
+  }
+  return result;
+}
+
+function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+
+    // Check if the XMLHttpRequest object has a "withCredentials" property.
+    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+    xhr.open(method, url, true);
+
+  } else if (typeof XDomainRequest != "undefined") {
+
+    // Otherwise, check if XDomainRequest.
+    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+
+  } else {
+
+    // Otherwise, CORS is not supported by the browser.
+    xhr = null;
+
+  }
+  return xhr;
+}
+/* End functions for event logging */
 
 var animPositionX=3;
 var animPositionY=0;
