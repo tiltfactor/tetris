@@ -3,8 +3,68 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>displayBoards parser</title>
+		<style>
+			#canvastable {
+				border-collapse: collapse;
+				margin: 5px;
+			}
+			#canvastable td {
+				width: 20px;
+				height: 20px;
+				border: 1px #666 solid;
+			}
+			#numdisplay {
+				display: inline-block;
+			 	width: 40px;
+			 	text-align: center;
+			}
+			#buttons {
+				display: table-cell;
+				border: 1px gray solid;
+				padding: 5px;
+			}
+		</style>
 	</head>
 	<body>
-		This is the displayBoards parser.
+		<form onSubmit="return false;">
+			<select id="gameselect"></select>
+			<input type="button" value="Select board" onClick="selectGame(this.form.gameselect.value);"/>
+		</form>
+		<table id="canvastable"><tbody>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+			<tr><td><td><td><td><td><td><td><td><td><td></tr>
+		</tbody></table>
+		<div id="buttons">
+			<button type="button" class="prev" onClick="game.setCurNum(0);"> |&lt&lt </button>
+			<button type="button" class="prev" onClick="game.addCurNum(-10);"> &lt&lt 10 </button>
+			<button type="button" class="prev" onClick="game.addCurNum(-1);"> &lt </button>
+			<span id="numdisplay">0</span>
+			<button type="button" class="next" onClick="game.addCurNum(1);"> > </button>
+			<button type="button" class="next" onClick="game.addCurNum(10);"> 10 >> </button>
+			<button type="button" class="next" onClick="game.setCurNum(game.TOTAL_NUM-1);"> >>| </button>
+		</div>
 	</body>
+	<script src="displayBoards.js"></script>
 </html>

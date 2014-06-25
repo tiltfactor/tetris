@@ -7,6 +7,22 @@
 			#parserselection, #results {
 				display: none;
 			}
+			html {
+				height: 100%;
+			}
+			body {
+				height: 100%;
+				margin: 0;
+				padding: 10px;
+				box-sizing: border-box;
+			}
+			iframe {
+				height: 90%;
+				width: 100%;
+			}
+			h1 {
+				margin: 0;
+			}
 		</style>
 	</head>
 	<body>
@@ -40,7 +56,7 @@
 			</form>
 		</div>
 		<div id="results">
-			<iframe id="resultframe">
+			<iframe id="resultframe" frameborder="0">
   				<p>Your browser does not support iframes.</p>
 			</iframe> <br/>
 			<input type="button" value="Back" onClick="backToParserSelection();" />
@@ -51,6 +67,7 @@
 	<script>
 		window.onunload = function() {
 			sessionStorage.clear();
+			rFrame.src = "about:blank";
 		};
 	</script>
 </html>
