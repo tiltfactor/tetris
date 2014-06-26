@@ -791,6 +791,12 @@ window.onbeforeunload = function() {
 }
 
 function logEvent(type, details) {
+  if (type == null) {
+    type = "no type";
+  }
+  if (details == null) {
+    details = "no details";
+  }
   log.events.push({
     timestamp : new Date().getTime(),
     type : type,

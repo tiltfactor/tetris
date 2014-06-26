@@ -6,14 +6,19 @@
             mkdir("protected/data", 0755, true);
         }
 
-        //Generate unique filename
+        //Generate unique id/filename
         do {
-            $filename = "protected/data/" . uniqid() . ".json";
+            $uid = uniqid();
+            $filename = "protected/data/" . $uid . ".json";
         } while (file_exists($filename));
 
+        //Store id in JSON
+        $data = json_decode($_POST["data"]);
+        $data->id = $uid;
+        $dataString = json_encode($data);
         //Write JSON to file
         $file = fopen($filename, "a");
-        fwrite($file, $_POST["data"] . "\n");
+        fwrite($file, $dataString);
         fclose($file);
         echo "data received";
     } else {
