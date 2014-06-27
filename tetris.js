@@ -120,18 +120,24 @@ function updateSizing() {
   var bc = document.getElementById('board_canvas');
   var ac = document.getElementById('animated_canvas');
   var sc = document.getElementById('shadow_canvas');
+  var nc = document.getElementById('next_canvas');
   //var ph = document.getElementById('placeholder');
   var score_el = document.getElementById('score').parentNode;
+  var controls = document.getElementById('controls');
   bc.width = ac.width = sc.width = (xoff*2 + xsize*10 + gapsize*9);
   bc.height = ac.height = sc.height = (yoff*2 + ysize*24 + gapsize*23);
+  nc.width = (xoff*2 + xsize*4 + gapsize*3);
+  nc.height = (yoff*2 + ysize*2 + gapsize*3);
   //ph.style.height = (yoff*2+ysize*24+gapsize*23)+"px";
   //ph.style.width = ((xoff*2 + xsize*10 + gapsize*9)+180)+"px";
 
+  controls.style.marginLeft = (bc.width + 10)+"px";
+  controls.style.marginTop = (0.25 * bc.height) +"px";
 
-  document.getElementById('instructions').style.marginLeft = (bc.width)+"px";
-  document.getElementById('instr').ontouchmove = function (e) { // prevent touchmove default scroll behavior on all but the instr text section
-    e.stopPropagation();
-  }
+  // document.getElementById('instructions').style.marginLeft = (bc.width)+"px";
+  // document.getElementById('instr').ontouchmove = function (e) { // prevent touchmove default scroll behavior on all but the instr text section
+  //   e.stopPropagation();
+  // }
 
 
 
@@ -141,8 +147,10 @@ function updateSizing() {
   bc.style.left = ac.style.left = sc.style.left = positionFromLeft + "px";
 
   score_el.style.left = positionFromLeft+bc.width+10+"px";
+  nc.style.left = positionFromLeft+bc.width+10+"px";
+  nc.style.top = parseInt(score_el.style.fontSize.slice(0,-2)) + 10 + "px";
 
-  document.getElementById('instructions').style.top = score_el.clientHeight + "px";
+  // document.getElementById('instructions').style.top = score_el.clientHeight + "px";
 
 
   var ctx1 = document.getElementById('board_canvas').getContext('2d');
@@ -163,10 +171,11 @@ function clearRowCheck(startrow, numrowsdown) {
   }
   if (full) { numRowsCleared++; shiftDown(startrow+i);  var ctx1 = document.getElementById('board_canvas').getContext('2d'); drawBoard(board,ctx1);}
   }
-  if (numRowsCleared == 1) {applyScore(100);}
-  else if (numRowsCleared == 2) {applyScore(200);}
-  else if (numRowsCleared == 3) {applyScore(400);}
-  else if (numRowsCleared == 4) {applyScore(1000);}
+  if (numRowsCleared == 1) {applyScore(1);}
+  else if (numRowsCleared == 2) {applyScore(2);}
+  else if (numRowsCleared == 3) {applyScore(3);}
+  else if (numRowsCleared == 4) {applyScore(4);}
+  logEvent("clear", numRowsCleared);
 }
 // row is full
 function shiftDown(row) {
@@ -398,8 +407,9 @@ function win_onload() {
   }
 
   // required to make the range actually settable
-  document.getElementById('sens_range').ontouchmove = function (e) { e.stopPropagation(); }
+  // document.getElementById('sens_range').ontouchmove = function (e) { e.stopPropagation(); }
   updateSizing();
+  drawNext(document.getElementById('next_canvas').getContext('2d'));
 }
 
 // coordinate systems follow convention starting at top-left.
@@ -463,8 +473,9 @@ function gameWin() {
   clearContext(sc.getContext('2d'),sc.width,sc.height);
   var ac = document.getElementById('animated_canvas');
   clearContext(ac.getContext('2d'),ac.width,ac.height);
-  drawMessage("You Win!", 1.45);
+  drawMessage(" You Win!", 1.45);
   setPause(true);
+  sendLog("win");
 }
 function gameOver() {
   drawMessage("Game Over", 1.45);
@@ -477,17 +488,21 @@ function gameOver() {
 var objPos = {x:0, y:0};
 var lockTimer = "";
 var generator = random_perm_single(Math.floor((new Date()).getTime() / 1000));
+var nextPiece = generator();
 function next() {
   pieceX = 3;
   pieceY = 0;
   animPositionX = pieceX;
   animPositionY = pieceY;
   curRotation = 0;
-  curPiece = generator();
+  curPiece = nextPiece;
+  nextPiece = generator();
+  drawNext(document.getElementById('next_canvas').getContext('2d'));
   if (kick()) {
     gameOver();
   }
   updateShadow();
+  logEvent("piece", curPiece);
 }
 
 
@@ -585,7 +600,7 @@ moves = [
   }
   pieceY = curY;
   dropPiece();
-  applyScore(traversed);
+  // applyScore(traversed);
   clearLockTimer();
   },
   // timer based down
@@ -670,7 +685,7 @@ function updatePiece() {
 // will be called from left and right moves, also
 function updateShadow() {
   var ctx = document.getElementById('shadow_canvas').getContext('2d');
-  drawShadow(ctx);
+  // drawShadow(ctx);
 }
 
 var repeatRateInitial = 200;
@@ -698,7 +713,7 @@ function stopRepeat(i) {
   }
 }
 
-var buttonList = [[37,74],[],[39,76],[40,75],[38,73,88,82],[90,84],[68,32],[],[67],[77],[78]];
+var buttonList = [[37,74],[],[39,76],[40,75],[38,73,88,82],[90,84],[68,32],[],[67],[],[]];
 var buttonStates = new Array(buttonList.length); for (i=0;i<buttonList.length;++i) buttonStates[i] = 0;
 
 //var directionalButtonStates = [0,0,0,0]; // left up right down
@@ -720,10 +735,10 @@ function keydownfunc(e) {
     logEvent("action", action);
   }
 
-  if (keychar == 'P') {
-    if (paused) unPause();
-  else { setPause(false); return; }
-  }
+  // if (keychar == 'P') {
+  //   if (paused) unPause();
+  // else { setPause(false); return; }
+  // }
   if (paused) return;
 
   var i;
@@ -766,14 +781,12 @@ function keyupfunc(e) {
 
 /* Functions for event logging */
 function getAction(keynum) {
-  var actionNames = ["left", null, "right", "down", "rot-right", "rot-left", "drop", null, null, null, null, "pause"];
-  var fullButtonList = buttonList.slice();
-  fullButtonList.push([80]);
+  var actionNames = ["left", null, "right", "down", "rot-right", "rot-left", "drop", null, null, null, null];
   var i;
-  for (i=0;i<fullButtonList.length;i++) {
+  for (i=0;i<buttonList.length;i++) {
     var j;
-    for (j=0;j<fullButtonList[i].length;j++) {
-      if (keynum == fullButtonList[i][j]) {
+    for (j=0;j<buttonList[i].length;j++) {
+      if (keynum == buttonList[i][j]) {
         return actionNames[i];
       }
     }
@@ -948,6 +961,35 @@ function drawPiece(context) {
 
 }
 
+function drawNext(context) {
+  context.fillStyle = "#777";
+  context.fillRect(0,0,xoff*2 + xsize*4 + gapsize*3,yoff*2+ysize*2+gapsize*1);
+  // context.clearRect(xoff-bordersize,yoff-bordersize,(xsize+gapsize)*4-gapsize+bordersize*2,(ysize+gapsize)*2-gapsize+bordersize*2);
+  // context.strokeRect(xoff-.5,yoff-.5,(xsize+gapsize)*4-gapsize+1,(ysize+gapsize)*2-gapsize+1);
+  context.fillStyle = "#888";
+  context.fillRect(xoff,yoff,(xsize+gapsize)*4-gapsize,(ysize+gapsize)*2-gapsize);
+
+  var gridX = 0, gridY = 0;
+  tetk = tetrominos[nextPiece][curRotation];
+  //context.clearRect(0,0,xoff*2 + xsize*4 + gapsize*3,yoff*2+ysize*2+gapsize*1);
+  context.save();
+  //context.fillStyle = colors[nextPiece+1];
+  context.translate(xoff+gridX*(xsize+gapsize),yoff+gridY*(ysize+gapsize));
+  for (j=0;j<2;j++) {
+    var tetkj = tetk[j];
+    for (i=0;i<4;i++) {
+      var tetkji = tetkj[i];
+      if (tetkji) {
+        context.fillStyle = colors[nextPiece+1];
+      } else {
+        context.fillStyle = "#999";
+      }
+      context.fillRect(i*(xsize+gapsize),j*(ysize+gapsize),xsize,ysize);
+    }
+  }
+  context.restore();
+}
+
 var shadowY = 0;
 function drawShadow(context) {
   var curY;
@@ -1054,6 +1096,9 @@ function applyScore(amount) {
 }
 function increaseScore(amount) {
   score += amount;
+  if (score >= 20) { //line cap can be changed here
+    gameWin();
+  }
   document.getElementById('score').innerHTML = score;
 }
 function subtractScore(amount) {
