@@ -20,7 +20,6 @@
 // IN THE SOFTWARE.
 // ============================================================================
 
-var TETRIS = new function () { // namespacing
 
 function random_det(seed) {
   return function() {
@@ -123,16 +122,12 @@ function updateSizing() {
   var nc = document.getElementById('next_canvas');
   //var ph = document.getElementById('placeholder');
   var score_el = document.getElementById('score').parentNode;
-  var controls = document.getElementById('controls');
   bc.width = ac.width = sc.width = (xoff*2 + xsize*10 + gapsize*9);
   bc.height = ac.height = sc.height = (yoff*2 + ysize*24 + gapsize*23);
   nc.width = (xoff*2 + xsize*4 + gapsize*3);
   nc.height = (yoff*2 + ysize*2 + gapsize*3);
   //ph.style.height = (yoff*2+ysize*24+gapsize*23)+"px";
   //ph.style.width = ((xoff*2 + xsize*10 + gapsize*9)+180)+"px";
-
-  controls.style.marginLeft = (bc.width + 10)+"px";
-  controls.style.marginTop = (0.25 * bc.height) +"px";
 
   // document.getElementById('instructions').style.marginLeft = (bc.width)+"px";
   // document.getElementById('instr').ontouchmove = function (e) { // prevent touchmove default scroll behavior on all but the instr text section
@@ -261,7 +256,7 @@ var setPause = function(isendgame) {
 function unPause() {
   if (!paused) return;
   if (autoMoveDownInterval == "") {
-    autoMoveDownInterval = setInterval(moveDownIntervalFunc,300);
+    //autoMoveDownInterval = setInterval(moveDownIntervalFunc,300);
   }
   if (animationUpdateInterval == "") {
     animationUpdateInterval = setInterval(animationUpdateIntervalFunc,16);
@@ -488,7 +483,7 @@ function gameOver() {
 var objPos = {x:0, y:0};
 var lockTimer = "";
 var generator = random_perm_single(Math.floor((new Date()).getTime() / 1000));
-var nextPiece = generator();
+var nextPiece = game.pieces.shift().details;
 function next() {
   pieceX = 3;
   pieceY = 0;
@@ -496,7 +491,7 @@ function next() {
   animPositionY = pieceY;
   curRotation = 0;
   curPiece = nextPiece;
-  nextPiece = generator();
+  nextPiece = game.pieces.shift().details;
   drawNext(document.getElementById('next_canvas').getContext('2d'));
   if (kick()) {
     gameOver();
@@ -806,6 +801,7 @@ window.onbeforeunload = function() {
 }
 
 function logEvent(type, details) {
+  return;
   if (type == null) {
     type = "no type";
   }
@@ -820,6 +816,7 @@ function logEvent(type, details) {
 }
 
 function sendLog(details) {
+  return;
   if (logSent) {
     return;
   }
@@ -1112,8 +1109,8 @@ function subtractScore(amount) {
   document.getElementById('score').innerHTML = score;
 }
 
-document.onkeydown = function (e) { keydownfunc(e); };
-document.onkeyup = function (e) { keyupfunc(e); };
+//document.onkeydown = function (e) { keydownfunc(e); };
+//document.onkeyup = function (e) { keyupfunc(e); };
 document.onmousemove = function (e) { mousemovefunc(e); };
 window.onblur = function () {losefocusfunc(); };
 window.onfocus = function () {gainfocusfunc(); };
@@ -1231,9 +1228,11 @@ function win_onresize() {
   updateSizing();
 };
 
+function setScoreIncreasing() { isScoreIncreasing = true; score = 0; };
 
 // HERE IS THE API
 
+/*
 this.isPaused = function () { return isPaused(); };
 this.setPause = function () { setPause(false); };
 this.unPause = function () { unPause(); };
@@ -1244,5 +1243,5 @@ this.setTouchSensitivity = function (value) {
 this.toggle_touch_draw = function () { actually_draw_touches = !actually_draw_touches;   return actually_draw_touches; };
 this.setScoreIncreasing = function () { isScoreIncreasing = true; score = 0; };
 this.scoreChangeCallback = function (cb) { scoreCallback = cb; };
+*/
 
-}; // end TETRIS namespace (this module system is some weirdness I don't yet fully understand but it works and that's all that matters)

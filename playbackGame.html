@@ -1,0 +1,33 @@
+<!doctype HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>playbackGame parser</title>
+		<style>
+			form {
+				position: absolute;
+				right: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<form onSubmit="return false;">
+			<select id="gameselect"></select>
+			<input type="button" value="Select board" onClick="selectGame(this.form.gameselect.value);"/>
+			<input type="button" value="Start playback" onClick="processEvent();"/>
+		</form>
+		<canvas id="board_canvas" width="120" height="250" style="position:fixed; left:10px; top:10px; z-index:1">
+		Your browser does not support HTML5 Canvas.
+		</canvas>
+		<canvas id="animated_canvas" width="120" height="250" style="position:fixed; left:10px; top:10px; z-index:3"></canvas>
+		<canvas id="next_canvas" width="120" height="250" style="position:fixed; left:10px; top:10px; z-index:2"></canvas>
+
+		<div style="position: fixed; top:10px; font-family:Sans-serif; font-size:30px">Lines cleared: <span id="score" >0</span></div>
+	</body>
+	<script src="playbackGame.js"></script>
+	<script src="playbackTetris.js"></script>
+	<script src="strokeText.js"></script>
+	<script type='text/javascript'>
+		setScoreIncreasing();
+	</script>
+</html>
