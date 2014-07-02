@@ -10,7 +10,7 @@ function submitParserSelection(form) {
 	sessionStorage.setItem("data", JSON.stringify(sessionData));
 
 	setParser(form.parser);
-	rFrame.src = parser + ".html";
+	rFrame.src = "parsers/" + parser + ".html";
 	document.getElementById("parserselection").style.display = "none";
 	document.getElementById("results").style.display = "inline";
 }
