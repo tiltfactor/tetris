@@ -175,7 +175,9 @@ function clearRowCheck(startrow, numrowsdown) {
   else if (numRowsCleared == 2) {applyScore(2);}
   else if (numRowsCleared == 3) {applyScore(3);}
   else if (numRowsCleared == 4) {applyScore(4);}
-  logEvent("clear", numRowsCleared);
+  if (numRowsCleared) {
+    logEvent("clear", numRowsCleared);
+  }
 }
 // row is full
 function shiftDown(row) {
@@ -525,9 +527,9 @@ function fixPiece() {
   }
   }
   drawBoard(board,document.getElementById('board_canvas').getContext('2d'));
-  logEvent("board", board.slice());
   // will hardcode this behavior for now
   clearRowCheck(pieceY,tetrominos[curPiece][curRotation].length);
+  logEvent("board", board.slice());
   next();
 }
 

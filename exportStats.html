@@ -1,0 +1,25 @@
+<!doctype HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>exportCSV parser</title>
+	</head>
+	<body>
+		<p>Choose the statistics you would like calculated for each board.</p>
+		<form onSubmit="return false;">
+			<table>
+				<tr>
+					<td><input type="checkbox" name="func" value="countCells" /></td>
+					<td>Count cells</td>
+				</tr>
+				<tr display="none">
+					<td><input type="checkbox" name="func" value="countCells" /></td>
+					<td>Count cells</td>
+				</tr>
+			</table>
+			<input type="submit" onClick="chooseFunctions(this.form);" value="Continue"/>
+		</form>
+		<ul id="linklist"></ul>
+	</body>
+	<script src="exportStats.js"></script>
+</html>
