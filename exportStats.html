@@ -5,16 +5,39 @@
 		<title>exportCSV parser</title>
 	</head>
 	<body>
-		<p>Choose the statistics you would like calculated for each board.</p>
 		<form onSubmit="return false;">
+			<p>Choose the statistics you would like calculated for each board.</p>
 			<table>
 				<tr>
 					<td><input type="checkbox" name="func" value="countCells" /></td>
 					<td>Count cells</td>
 				</tr>
-				<tr display="none">
-					<td><input type="checkbox" name="func" value="countCells" /></td>
-					<td>Count cells</td>
+				<tr>
+					<td><input type="checkbox" name="func" value="countHoles" /></td>
+					<td>Count holes</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="func" value="highestPiece" /></td>
+					<td>Highest piece</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="func" value="averageHeight" /></td>
+					<td>Average height</td>
+				</tr>
+			</table>
+			<p>Choose the separators you would like for the CSV.
+			<table>
+				<tr>
+					<td><input type="checkbox" name="separator" value="," checked /></td>
+					<td>Comma (,)</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="separator" value="\t" /></td>
+					<td>Tab (&nbsp;&nbsp;&nbsp;&nbsp;)</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="separator" value=" " /></td>
+					<td>Space (	)</td>
 				</tr>
 			</table>
 			<input type="submit" onClick="chooseFunctions(this.form);" value="Continue"/>

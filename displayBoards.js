@@ -8,7 +8,7 @@ var Game = function(boards, canvasTable, numDisplay) {
 		var grid = canvasTable.children[0];
 		for (var y = 0; y < 24; y++) {
 			for (var x = 0; x < 10; x++) {
-				grid.children[y].children[x].style.backgroundColor = Game.colors[board[10 * y + x]];
+				grid.children[y].children[x].style.backgroundColor = Game.colors[board[y][x]];
 			}
 		}
 		numDisplay.textContent = curNum;

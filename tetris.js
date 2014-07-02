@@ -529,7 +529,7 @@ function fixPiece() {
   drawBoard(board,document.getElementById('board_canvas').getContext('2d'));
   // will hardcode this behavior for now
   clearRowCheck(pieceY,tetrominos[curPiece][curRotation].length);
-  logEvent("board", board.slice());
+  logEvent("board", get2DBoard(board));
   next();
 }
 
@@ -796,6 +796,20 @@ function getAction(keynum) {
     }
   }
   return null;
+}
+
+function get2DBoard(board) {
+  var width = 10;
+  var height = 24;
+  var board2D = [];
+  for (var y = 0; y < height; y++) {
+    var row = [];
+    for (var x = 0; x < width; x++) {
+      row.push(board[width * y + x]);
+    }
+    board2D.push(row);
+  }
+  return board2D;
 }
 
 var log = {

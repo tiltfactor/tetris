@@ -1,10 +1,12 @@
 var list = document.getElementById("linklist");
+var separators = "";
+
 function createCSV(array) {
 	var csv = "";
 	for (var i = 0, arrLength = array.length; i < arrLength; i++) {
 		var elt = array[i];
 		for (var attr in elt) {
-			csv += (elt[attr] + "\t");
+			csv += (elt[attr] + separators);
 		}
 		csv = csv.slice(0, -1);
 		csv += "\n";
@@ -13,11 +15,22 @@ function createCSV(array) {
 }
 
 function chooseFunctions(form) {
-	var checkboxes = form.func;
+	while (list.firstChild) {
+		list.removeChild(list.firstChild);
+	}
+	separators = "";
+	var sepBoxes = form.separator;
+	for (var i = 0, sboxLength = sepBoxes.length; i < sboxLength; i++) {
+		if (sepBoxes[i].checked) {
+			separators += sepBoxes[i].value;
+		}
+	}
+
+	var funcBoxes = form.func;
 	var functions = [];
-	for (var i = 0, cboxLength = checkboxes.length; i < cboxLength; i++) {
-		if (checkboxes[i].checked) {
-			functions.push(checkboxes[i].value);
+	for (var i = 0, fboxLength = funcBoxes.length; i < fboxLength; i++) {
+		if (funcBoxes[i].checked) {
+			functions.push(funcBoxes[i].value);
 		}
 	}
 	getStats(functions);
@@ -29,7 +42,7 @@ function getStats(functions) {
 		var boards = getBoards(sessions[i]);
 		var data = {
 			id: sessions[i].id,
-			boardStats: []
+			boardStats: [functions]
 		};
 		for (var j = 0, boardsLength = boards.length; j < boardsLength; j++) {
 			board = boards[j];
@@ -73,10 +86,58 @@ function showDownload(data) {
  * Each function should take in a board, and return a value of some sort to be added to the array
  * The returned value should ideally be a number, for purposes of analysis.
  */
+var HEIGHT = 24;
+var WIDTH = 10;
+//Counts number of non-zero cells
 function countCells(board) {
-	//Counts number of non-zero cells
-	var cells = board.filter(function(val) {
-		return val;
-	}).length;
+	var cells = 0;
+	for (var y = 0; y < HEIGHT; y++) {
+		for (var x = 0; x < WIDTH; x++) {
+			if (board[y][x]) {
+				cells++;
+			}
+		}
+	}
 	return cells;
+}
+//Counts number of covered holes
+function countHoles(board) {
+	var holes = 0;
+	for (var x = 0; x < WIDTH; x++) {
+		var blockFound = false;
+		for (var y = 0; y < HEIGHT; y++) {
+			if (blockFound && board[y][x] == 0) {
+				holes++;
+			} else if (board[y][x]) {
+				blockFound = true;
+			}
+		}
+	}
+	return holes;
+}
+//Returns height of highest piece
+function highestPiece(board) {
+	for (var y = 0; y < HEIGHT; y++) {
+		for (var x = 0; x < WIDTH; x++) {
+			if (board[y][x]) {
+				return HEIGHT - y;
+			}
+		}
+	}
+	return 0;
+}
+//Returns average height of columns
+function averageHeight(board) {
+	var totalHeight = 0;
+	for (var x = 0; x < WIDTH; x++) {
+		var colHeight = 0;
+		for (var y = 0; y < HEIGHT; y++) {
+			if (board[y][x]) {
+				colHeight = HEIGHT - y;
+				break;
+			}
+		}
+		totalHeight += colHeight
+	}
+	return totalHeight / WIDTH;
 }
