@@ -3,6 +3,7 @@ var Game = function(sessionEvents) {
 
 	_keydowns = [];
 	_keyups = [];
+	_locks = [];
 	this.pieces = [];
 	this.events = [];
 	this.curNum = 0;
@@ -24,6 +25,9 @@ var Game = function(sessionEvents) {
 					break;
 				case "keyup":
 					_keyups.push(sessionEvents[i]);
+					break;
+				case "lock":
+					_locks.push(sessionEvents[i]);
 					break;
 				case "piece":
 					that.pieces.push(sessionEvents[i]);
@@ -63,7 +67,9 @@ var Game = function(sessionEvents) {
 				}
 			}
 		}
-
+		for (var k = 0, locksLength = _locks.length; k < locksLength; k++) {
+			_addEvent(_locks[k].timestamp, 3);
+		}
 		for (var t = that.startTime + 300; t < that.endTime; t += 300) {
 			_addEvent(t, 7);
 		}
@@ -83,12 +89,12 @@ var Game = function(sessionEvents) {
 	}
 
 	this.processEvent = function() {
-		var evt = this.events[this.curNum];
+		var evt = that.events[that.curNum];
 		moves[evt.action]();
-		this.curNum++;
+		that.curNum++;
 
-		if (this.curNum < this.TOTAL_NUM - 1) {
-			window.setTimeout(processEvent, this.events[this.curNum].timestamp - evt.timestamp);
+		if (that.curNum < that.TOTAL_NUM - 1) {
+			window.setTimeout(that.processEvent, that.events[that.curNum].timestamp - evt.timestamp);
 		}
 	}
 };
@@ -125,13 +131,3 @@ function selectGame(num) {
 	game = games[num];
 }
 selectGame(0);
-
-function processEvent() {
-	var evt = game.events[game.curNum];
-	moves[evt.action]();
-	game.curNum++;
-
-	if (game.curNum < game.TOTAL_NUM - 1) {
-		window.setTimeout(processEvent, game.events[game.curNum].timestamp - evt.timestamp);
-	}
-}

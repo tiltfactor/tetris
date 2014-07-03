@@ -548,11 +548,11 @@ function isPieceInside() {
 }
 moves = [
   // left
-  function () {if (freezeInteraction) return; pieceX -= 1; if (isPieceInside()) pieceX += 1; shiftright = 0; updateShadow(); clearLockTimer();},
+  function () {if (freezeInteraction) return; pieceX -= 1; if (isPieceInside()) pieceX += 1; shiftright = 0; updateShadow();}, //clearLockTimer();},
   // up direction movement is a cheat in standard tetris
-  function () {if (freezeInteraction) return; pieceY -= 1; if (isPieceInside()) pieceY += 1; clearLockTimer();},
+  function () {if (freezeInteraction) return; pieceY -= 1; if (isPieceInside()) pieceY += 1;}, //clearLockTimer();},
   // right
-  function () {if (freezeInteraction) return; pieceX += 1; if (isPieceInside()) pieceX -= 1; shiftright = 1; updateShadow(); clearLockTimer();},
+  function () {if (freezeInteraction) return; pieceX += 1; if (isPieceInside()) pieceX -= 1; shiftright = 1; updateShadow();}, //clearLockTimer();},
   // down key calls this -- moves stuff down, if at bottom, locks it
   function () {
     if (freezeInteraction) return;
@@ -570,7 +570,7 @@ moves = [
   if (kick()) curRotation = oldrot;
   else animRotation = -Math.PI/2.0;
   updateShadow();
-  clearLockTimer();
+  //clearLockTimer();
   },
   // rotate ccw
   function () {
@@ -581,7 +581,7 @@ moves = [
   if (kick()) curRotation = oldrot;
   else animRotation = Math.PI/2.0;
   updateShadow();
-  clearLockTimer();
+  //clearLockTimer();
   },
   // hard drop
   function () {
@@ -605,7 +605,7 @@ moves = [
     if (isPieceInside()) {
     pieceY -= 1;
     if (lockTimer == "") {
-      lockTimer = setTimeout(function(){moves[3]();},600);
+      //lockTimer = setTimeout(function(){moves[3]();},300);
     }
   }
   },
@@ -1112,7 +1112,7 @@ function subtractScore(amount) {
 //document.onkeydown = function (e) { keydownfunc(e); };
 //document.onkeyup = function (e) { keyupfunc(e); };
 document.onmousemove = function (e) { mousemovefunc(e); };
-window.onblur = function () {losefocusfunc(); };
+//window.onblur = function () {losefocusfunc(); };
 window.onfocus = function () {gainfocusfunc(); };
 document.onmousedown = function (e) {mousedownfunc(e); };
 

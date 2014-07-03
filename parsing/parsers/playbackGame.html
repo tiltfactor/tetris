@@ -14,7 +14,7 @@
 		<form onSubmit="return false;">
 			<select id="gameselect"></select>
 			<input type="button" value="Select board" onClick="selectGame(this.form.gameselect.value);"/>
-			<input type="button" value="Start playback" onClick="processEvent();"/>
+			<input type="button" value="Start playback" onClick="game.processEvent();"/>
 		</form>
 		<canvas id="board_canvas" width="120" height="250" style="position:fixed; left:10px; top:10px; z-index:1">
 		Your browser does not support HTML5 Canvas.
