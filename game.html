@@ -72,7 +72,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
 
 <body>
 
-<div id='indicatorcontainer'></div>
+<!-- <div id='indicatorcontainer'></div> -->
 
 	<canvas id="board_canvas" width="120" height="250" style="position:fixed; left:10px; top:10px; z-index:1">
 		Your browser does not support HTML5 Canvas.
@@ -83,6 +83,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
 	<!-- <div id="placeholder" style=""> </div> -->
 
 	<div style="position: fixed; top:10px; font-family:Sans-serif; font-size:30px">Lines cleared: <span id="score" >0</span></div>
+
+	<div style = "position: fixed; top:120px; left: 300px; font-family: sans-serif; font-size: 30px">Game ends in <span id="time"></span> minutes!</div>
+
 
 
 	<table id="controls">
@@ -111,6 +114,35 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
 			<td>Immediately drop piece</td>
 		</tr>
 	</table>
+
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript">
+
+		function startTimer(duration, display) {
+	    	var timer = duration, minutes, seconds;
+	    	setInterval(function () {
+	        minutes = parseInt(timer / 60, 10);
+	        seconds = parseInt(timer % 60, 10);
+
+	        minutes = minutes < 10 ? "0" + minutes : minutes;
+	        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+	        display.text(minutes + ":" + seconds);
+
+	        if (--timer < 0) {
+	            timer = 0;
+        	}
+   		 }, 1000);
+		}
+
+		jQuery(function ($) {
+		    var fiveMinutes = 300, 
+		        display = $('#time');
+		    startTimer(fiveMinutes, display);
+		});
+
+	</script>
 <!-- <div id="instructions" style='position: relative'>
 
 

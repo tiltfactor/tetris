@@ -24,8 +24,8 @@ var TETRIS = new function () { // namespacing
 
 	var startTime = new Date().getTime();
 	console.log(startTime);
-  var gameTimeOut = 3000; // 3secs
-	//var gameTimeOut = 300000; // 5 minutes
+	var gameTimeOut = 300000; // 5 minutes
+  var gameIsOver = false;
 
 
 function random_det(seed) {
@@ -260,6 +260,7 @@ var setPause = function(isendgame) {
   //document.title = "Tetris! GAME OVER";
   if (!isendgame) { drawPaused(); document.title="Tetris! PAUSED";
   }
+  else {takeToSurvey()};
   paused = true;
   pausedBecauseLostFocus = false; // default this to false
 
@@ -488,14 +489,14 @@ function gameWin() {
 
 function gameOver() {
   drawMessage("Game Over", 1.45);
+  gameIsOver = true;
   setPause(true);
   sendLog("game over");
   //Cleanup
-  setTimeout(takeToSurvey(), 2000);
 }
 
 function takeToSurvey() {
-  if (window.confirm('Click "Ok" to take survey'))
+  if (window.confirm('Time is up. Click "Ok" to take survey'))
       window.location.href='https://www.google.com';
 }
 
@@ -515,7 +516,7 @@ function next() {
   var timeNow = new Date().getTime();
   console.log(timeNow);
   if (kick() || timeNow - startTime > gameTimeOut) {
-    gameOver(); 
+    gameOver();
   }
   updateShadow();
   logEvent("piece", curPiece);
