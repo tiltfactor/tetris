@@ -22,6 +22,12 @@
 
 var TETRIS = new function () { // namespacing
 
+	var startTime = new Date().getTime();
+	console.log(startTime);
+  var gameTimeOut = 3000; // 3secs
+	//var gameTimeOut = 300000; // 5 minutes
+
+
 function random_det(seed) {
   return function() {
     // Robert Jenkins' 32 bit integer hash function.
@@ -479,12 +485,18 @@ function gameWin() {
   setPause(true);
   sendLog("win");
 }
+
 function gameOver() {
   drawMessage("Game Over", 1.45);
   setPause(true);
   sendLog("game over");
   //Cleanup
+  setTimeout(takeToSurvey(), 2000);
+}
 
+function takeToSurvey() {
+  if (window.confirm('Click "Ok" to take survey'))
+      window.location.href='https://www.google.com';
 }
 
 var objPos = {x:0, y:0};
@@ -500,8 +512,10 @@ function next() {
   curPiece = nextPiece;
   nextPiece = generator();
   drawNext(document.getElementById('next_canvas').getContext('2d'));
-  if (kick()) {
-    gameOver();
+  var timeNow = new Date().getTime();
+  console.log(timeNow);
+  if (kick() || timeNow - startTime > gameTimeOut) {
+    gameOver(); 
   }
   updateShadow();
   logEvent("piece", curPiece);
