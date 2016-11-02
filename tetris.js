@@ -24,7 +24,7 @@ var TETRIS = new function () { // namespacing
 
 	var startTime = new Date().getTime();
 	console.log(startTime);
-	var gameTimeOut = 300000; // 5 minutes
+	var gameTimeOut = 8000; // 5 minutes
   var gameIsOver = false;
 
 
@@ -513,9 +513,8 @@ function next() {
   curPiece = nextPiece;
   nextPiece = generator();
   drawNext(document.getElementById('next_canvas').getContext('2d'));
-  var timeNow = new Date().getTime();
-  console.log(timeNow);
-  if (kick() || timeNow - startTime > gameTimeOut) {
+  
+  if (kick()) { //need to modify
     gameOver();
   }
   updateShadow();
@@ -694,7 +693,12 @@ function kick() {
 }
 
 function updatePiece() {
+  var timeNow = new Date().getTime();
+  if (timeNow - startTime > gameTimeOut) {
+    gameOver();
+  }
   var ctx = document.getElementById('animated_canvas').getContext('2d');
+  
   drawPiece(ctx);
 }
 

@@ -136,16 +136,28 @@
 		// var strn = "This is the message for condition = n";
 		// var strs = "This is the message for condition = s";
 		var condition;
+		var hasCond = false;
 		var URL = window.location.href;
 		//var URL = "tiltfactor1.dartmouth.edu/test/tetris?c=n&variable2=something&variable3=something";
-    	var breakURL = URL.split("?");
-    	var variables = breakURL[1].split("&")
+    	if (URL.includes("?")) {
+    		var breakURL = URL.split("?");
+    		if (breakURL[1].includes("&")) {
+    			var variables = breakURL[1].split("&")
+    		}
+    	}
+
     	for (j in variables) {
     		console.log(variables[j]);
     		var i = variables[j].split("=");
-    		if (i[0] == "c")
+    		if (i[0] == "c") {
     			condition = i[1];
+    			hasCond = true;
+    		}
     	}
+
+    	if (hasCond == false)
+    		condition = "n"
+
 
 		if (condition == "n") {
 			$(document.getElementById('msg_s')).hide();
