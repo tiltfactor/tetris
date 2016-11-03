@@ -24,7 +24,7 @@ var TETRIS = new function () { // namespacing
 
 	var startTime = new Date().getTime();
 	console.log(startTime);
-	var gameTimeOut = 8000; // 5 minutes
+	var gameTimeOut = 300000; 
   var gameIsOver = false;
 
 
@@ -698,7 +698,6 @@ function updatePiece() {
     gameOver();
   }
   var ctx = document.getElementById('animated_canvas').getContext('2d');
-  
   drawPiece(ctx);
 }
 
