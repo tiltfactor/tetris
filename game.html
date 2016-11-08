@@ -28,7 +28,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
 
 	<script src="strokeText.js"></script>
 
-	<link rel="stylesheet" href="page.css" type="text/css" />
+<!-- 	<link rel="stylesheet" href="page.css" type="text/css" /> -->
 
 	<style type="text/css"> /* These are just for finger debug elements */
 		.finger-indicator {
@@ -51,10 +51,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
 		}
 	</style>
 
-	<script src='tetris.js' type="text/javascript"></script>
-	<script type='text/javascript'>
-		TETRIS.setScoreIncreasing();
-	</script>
+
 </head>
 
 <body>
@@ -71,7 +68,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
 
 	<div style="position: fixed; top:10px; font-family:Sans-serif; font-size:25px">Lines cleared: <span id="score" >0</span></div>
 
-	<div style = "position: fixed; top:120px; left: 300px; font-family: sans-serif; font-size: 25px">Game ends in <span id = "timer"></span>
+	<div style = "position:fixed; top:300px; left:300px; font-family: sans-serif; font-size: 25px">Game ends in <span id = "timer"></span>
 	</div>
 	<table id="controls">
 		<tr>
@@ -99,10 +96,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
 			<td>Immediately drop piece</td>
 		</tr>
 	</table>
-	
-	<script src = 'timer.js' type="text/javascript"></script>
-	<script type="text/javascript">
+
+	<script src='tetris.js' type="text/javascript"></script>
+	<script type='text/javascript'>
 		countdown(5);
+		TETRIS.setScoreIncreasing();
 	</script>
 
 
