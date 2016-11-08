@@ -1,7 +1,9 @@
 /*
  * timeout-dialog.js v1.0.1, 01-03-2012
+ * Modified to be used in Tetris, Nov 2016
  * 
  * @author: Rodrigo Neri (@rigoneri)
+ * @author: Nicole Chen 
  * 
  * (The MIT License)
  * 
@@ -50,13 +52,7 @@ var startTime = new Date();
       countdown: 10,
       message: 'You can close this dialog box in {0} seconds',
       msg: 'empty msg',
-      // question: 'Do you want to stay signed in?',
-      // sign_out_button_text: 'No, Sign me out',
-      // keep_alive_url: '/keep-alive',
-      // logout_url: null,
-      // logout_redirect_url: '/',
-      // restart_on_yes: true,
-      dialog_width: $(window).width()-100,
+      dialog_width: $(window).width()-200,
       dialog_height: $(window).height()-100,
     }    
 
@@ -120,7 +116,6 @@ var startTime = new Date();
 
           if (counter <= 0) {
             window.clearInterval(self.countdown);
-            // self.signOut(false);
           }
 
         }, 1000);

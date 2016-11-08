@@ -30,26 +30,8 @@
 
 		</style>
 
-<!-- 		 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		 <link rel="stylesheet" href="/resources/demos/style.css"> -->
-
-
-
 	</head>
 	<body>
-<!-- 		<div id="msg_n">
-  			This is for cond=n
-  			<hr>
-  			<div id= "warning">You can only close this dialog box after <span id = "timer"></span> seconds.</div>
-		</div>
-
-		<div id="msg_s">
-  			This is for cond=s
-  			<hr>
-  			<div id= "warning">You can only close this dialog box after <span id = "timer"></span> seconds.</div>
-		</div> -->
-
-<!-- 		<div >I'm here <span id = "timer"></span></div> -->
 
 		<h1>Tetris</h1>
 		<h2>Rules</h2>
@@ -95,7 +77,6 @@
 		</p>
 		<a href="game.html">Play Game</a>
 		 <div>
-   <!--  <a href="#" id="timeout-example">Click Here to See Demo</a> -->
   </div>
 
 
@@ -110,23 +91,6 @@
 		var msg_n = "As you may know there has been some controversy about whether there are gender differences in spatial ability. The game you are about to play has NOT been shown to produce gender differences.";
 		var msg_s = "As you may know there has been some controversy about whether there are gender differences in spatial ability. The game you are about to play has been shown to produce gender differences.";
 		var mymsg;
-
-		// function showDialog(msg) {
-  //   		$(msg).dialog({
-  //   			draggable:false,
-  //   			autoOpen: true,
-		// 		modal: true,
-		// 		width: $(window).width(),
-		// 		height: $(window).height(),
-		// 		beforeClose: function(){
-		// 			var now = new Date();
-		// 			if (now.getTime()- startTime.getTime() < 5000)
-		// 				return false;
-		// 			else
-		// 				return true;
-  // 				 }
-  //   		});
-  // 		}
 
 		// var URL = "tiltfactor1.dartmouth.edu/test/tetris?c=n&variable2=something&variable3=something";
     	if (URL.includes("?")) {
@@ -160,35 +124,7 @@
     	if (condition == "s")
     		mymsg = msg_s;
 
-
-		// if (condition == "n") {
-		// 	$(document.getElementById('msg_s')).hide();
-		// 	showDialog("#msg_n");
-		// }
-
-		// else if (condition == "s") {
-		// 	$(document.getElementById('msg_n')).hide();
-		// 	showDialog("#msg_s");
-		// }
-
-
-
-		// var countdown = setInterval (tick, 1000);
-
-		// function tick (seconds) {
-		// 	seconds--;
-		// 	if (seconds < 0) {
-		// 		clearInterval (countdown)
-		// 	}
-		// }
-
-		// document.getElementById("timer").innerHTML = sec;
-			// $(function () {
-			//  $("#timeout-example").click(function(e) {
-			   // e.preventDefault();
-			   $.timeoutDialog({timeout: 1, countdown: 5, msg: mymsg});
-			//  });
-			// });
+		$.timeoutDialog({timeout: 1, countdown: 5, msg: mymsg});
 		</script>
 
 	</body>

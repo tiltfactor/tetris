@@ -496,7 +496,7 @@ function gameOver() {
 }
 
 function takeToSurvey() {
-  if (window.confirm('Time is up. Click "Ok" to take survey'))
+  if (window.confirm('Game is over. Click "Ok" to take survey'))
       window.location.href='https://www.google.com';
 }
 
