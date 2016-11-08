@@ -1,0 +1,50 @@
+/* Timeout Dialog Styles */
+.timeout-dialog {
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  position: absolute;
+  background: #DCDCDC;
+  border: 1px solid #808080;
+  -webkit-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 2px;
+}
+
+.timeout-dialog .ui-dialog-titlebar-close {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    width: 21px;
+    padding: 2px;
+    height: 20px;
+}
+.timeout-dialog .ui-dialog-buttonpane {
+  margin-top: 15px;
+}
+.timeout-dialog  ~ .ui-widget-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  filter: alpha(opacity=40);
+  -khtml-opacity: 0.4;
+  -moz-opacity: 0.4;
+  opacity: 0.4;
+}
+
+#timeout-countdown {
+  font-weight: bold;
+}
+
+#msg {
+  font-size: 20px;
+}
+
+.timeout-dialog .ui-dialog-content {
+    font-family: sans-serif;
+    font-size: 15px;
+}

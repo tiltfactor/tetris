@@ -3,10 +3,16 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Tetris</title>
+		<link rel="stylesheet" href="timeout-dialog.css" type="text/css" media="screen, projection" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"></script>
+		<script src = 'timeout-dialog.js' type="text/javascript"></script>
+
 		<style>
 			body {
 				font-family: sans-serif;
-				padding-left: 15px;
+				padding-left: 20px;
+				background: #F0F3F4;
 			}
 			table {
 				border-collapse: collapse;
@@ -21,27 +27,6 @@
 				font-size: 20px;
 			}
 
-			#msg_n, #msg_s {
-
-				/* set it to fill the whil screen */
-				-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-				-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-				
-				/* css3 border radius */
-				-moz-border-radius: 5px;
-			    -webkit-border-radius: 5px;
-				
-				background:#eee;
-
-				font-size:40px;
-				z-index:5000; 
-
-			}
-
-			.ui-dialog .ui-dialog-content {
-				font-family:Arial;
-    			padding: 30px;
-			}
 
 		</style>
 
@@ -52,17 +37,19 @@
 
 	</head>
 	<body>
-		<div id="msg_n">
+<!-- 		<div id="msg_n">
   			This is for cond=n
   			<hr>
-  			<div id= "warning">You can only close this dialog box after five seconds.</div>
+  			<div id= "warning">You can only close this dialog box after <span id = "timer"></span> seconds.</div>
 		</div>
 
 		<div id="msg_s">
   			This is for cond=s
   			<hr>
-  			<div id= "warning">You can only close this dialog box after five seconds.</div>
-		</div>
+  			<div id= "warning">You can only close this dialog box after <span id = "timer"></span> seconds.</div>
+		</div> -->
+
+<!-- 		<div >I'm here <span id = "timer"></span></div> -->
 
 		<h1>Tetris</h1>
 		<h2>Rules</h2>
@@ -107,47 +94,52 @@
 			Thanks, and have fun!
 		</p>
 		<a href="game.html">Play Game</a>
+		 <div>
+   <!--  <a href="#" id="timeout-example">Click Here to See Demo</a> -->
+  </div>
 
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 		<script type="text/javascript">
 
 		var startTime = new Date();
-
-		function showDialog(msg) {
-    		$(msg).dialog({
-    			draggable:false,
-    			autoOpen: true,
-				modal: true,
-				width: $(window).width(),
-				height: $(window).height(),
-				beforeClose: function(){
-					var now = new Date();
-					if (now.getTime()- startTime.getTime() <= 5000)
-						return false;
-					else
-						return true;
-  				 }
-    		});
-  		}
-
 		//send message to screen before showing instructions
-		// var strn = "This is the message for condition = n";
-		// var strs = "This is the message for condition = s";
 		var condition;
 		var hasCond = false;
 		var URL = window.location.href;
-		//var URL = "tiltfactor1.dartmouth.edu/test/tetris?c=n&variable2=something&variable3=something";
+		console.log(URL);
+		var msg_n = "As you may know there has been some controversy about whether there are gender differences in spatial ability. The game you are about to play has NOT been shown to produce gender differences.";
+		var msg_s = "As you may know there has been some controversy about whether there are gender differences in spatial ability. The game you are about to play has been shown to produce gender differences.";
+		var mymsg;
+
+		// function showDialog(msg) {
+  //   		$(msg).dialog({
+  //   			draggable:false,
+  //   			autoOpen: true,
+		// 		modal: true,
+		// 		width: $(window).width(),
+		// 		height: $(window).height(),
+		// 		beforeClose: function(){
+		// 			var now = new Date();
+		// 			if (now.getTime()- startTime.getTime() < 5000)
+		// 				return false;
+		// 			else
+		// 				return true;
+  // 				 }
+  //   		});
+  // 		}
+
+		// var URL = "tiltfactor1.dartmouth.edu/test/tetris?c=n&variable2=something&variable3=something";
     	if (URL.includes("?")) {
     		var breakURL = URL.split("?");
     		if (breakURL[1].includes("&")) {
-    			var variables = breakURL[1].split("&")
+    			var variables = breakURL[1].split("&");
+    		}
+    		else {
+    			var variables = [breakURL[1]];
     		}
     	}
 
     	for (j in variables) {
-    		console.log(variables[j]);
     		var i = variables[j].split("=");
     		if (i[0] == "c") {
     			condition = i[1];
@@ -155,20 +147,49 @@
     		}
     	}
 
+    	console.log(hasCond);
+
     	if (hasCond == false)
-    		condition = "n"
+    		condition = "n";
+
+    	console.log (condition);
+
+    	if (condition == "n")
+    		mymsg = msg_n;
+
+    	if (condition == "s")
+    		mymsg = msg_s;
 
 
-		if (condition == "n") {
-			$(document.getElementById('msg_s')).hide();
-			showDialog("#msg_n");
-		}
+		// if (condition == "n") {
+		// 	$(document.getElementById('msg_s')).hide();
+		// 	showDialog("#msg_n");
+		// }
 
-		else if (condition == "s") {
-			$(document.getElementById('msg_n')).hide();
-			showDialog("#msg_s");
-		}
+		// else if (condition == "s") {
+		// 	$(document.getElementById('msg_n')).hide();
+		// 	showDialog("#msg_s");
+		// }
 
+
+
+		// var countdown = setInterval (tick, 1000);
+
+		// function tick (seconds) {
+		// 	seconds--;
+		// 	if (seconds < 0) {
+		// 		clearInterval (countdown)
+		// 	}
+		// }
+
+		// document.getElementById("timer").innerHTML = sec;
+			// $(function () {
+			//  $("#timeout-example").click(function(e) {
+			   // e.preventDefault();
+			   $.timeoutDialog({timeout: 1, countdown: 5, msg: mymsg});
+			//  });
+			// });
 		</script>
+
 	</body>
 </html>
