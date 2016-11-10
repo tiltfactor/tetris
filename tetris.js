@@ -160,6 +160,7 @@ function updateSizing() {
   var nc = document.getElementById('next_canvas');
   //var ph = document.getElementById('placeholder');
   var score_el = document.getElementById('score').parentNode;
+  var timer_pos = document.getElementById('timer').parentNode;
   var controls = document.getElementById('controls');
   bc.width = ac.width = sc.width = (xoff*2 + xsize*10 + gapsize*9);
   bc.height = ac.height = sc.height = (yoff*2 + ysize*24 + gapsize*23);
@@ -184,8 +185,10 @@ function updateSizing() {
   bc.style.left = ac.style.left = sc.style.left = positionFromLeft + "px";
 
   score_el.style.left = positionFromLeft+bc.width+10+"px";
+  timer_pos.style.left = positionFromLeft+bc.width+10+"px";
   nc.style.left = positionFromLeft+bc.width+10+"px";
   nc.style.top = parseInt(score_el.style.fontSize.slice(0,-2)) + 10 + "px";
+  timer_pos.style.top = parseInt(score_el.style.fontSize.slice(0,-2)) + 10 + nc.height +10 + "px";
 
   // document.getElementById('instructions').style.top = score_el.clientHeight + "px";
 
@@ -527,9 +530,26 @@ function gameOver() {
 }
 
 function takeToSurvey() {
-  if (window.confirm('Game is over. Click "Ok" to take survey'))
-      window.location.href='https://www.google.com';
-}
+  // if (window.confirm('Game is over. Click "Ok" to take survey'))
+  //     window.location.href='https://www.google.com';
+  $('<div id="timeout">' + 'Game is over. Please take our survey.'+'</div>').appendTo('body')
+        .dialog({
+          modal: true,
+          width: 350,
+          height: 120,
+          draggable: false,
+          resizable: false,
+          buttons : {
+            'Take Survey' : { 
+              text: "Take Survey",
+              id: "take_survey",
+              click: function() {
+                window.location.href='https://www.google.com';
+              }
+            }
+        }
+      });
+    }
 
 var objPos = {x:0, y:0};
 var lockTimer = "";
@@ -727,7 +747,7 @@ function updatePiece() {
   // var timeNow = new Date().getTime();
   // if (timeNow - startTime > gameTimeOut) {
   // console.log (gameTimeOut);
-  if (gameTimeOut < 0) {
+  if (gameTimeOut <= 0) {
     gameOver();
   }
   var ctx = document.getElementById('animated_canvas').getContext('2d');
