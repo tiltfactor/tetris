@@ -511,15 +511,15 @@ function clearContext(ctx, width, height) {
   ctx.restore();
 }
 
-function gameWin() {
-  var sc = document.getElementById('shadow_canvas');
-  clearContext(sc.getContext('2d'),sc.width,sc.height);
-  var ac = document.getElementById('animated_canvas');
-  clearContext(ac.getContext('2d'),ac.width,ac.height);
-  drawMessage(" You Win!", 1.45);
-  setPause(true);
-  sendLog("win");
-}
+// function gameWin() {
+//   var sc = document.getElementById('shadow_canvas');
+//   clearContext(sc.getContext('2d'),sc.width,sc.height);
+//   var ac = document.getElementById('animated_canvas');
+//   clearContext(ac.getContext('2d'),ac.width,ac.height);
+//   drawMessage(" You Win!", 1.45);
+//   setPause(true);
+//   sendLog("win");
+// }
 
 function gameOver() {
   drawMessage("Game Over", 1.45);
@@ -1185,15 +1185,15 @@ function applyScore(amount) {
 }
 function increaseScore(amount) {
   score += amount;
-  if (score >= 20) { //line cap can be changed here
-    gameWin();
-  }
+  // if (score >= 20) { //line cap can be changed here
+  //   gameWin();
+  // }
   document.getElementById('score').innerHTML = score;
 }
 function subtractScore(amount) {
   score -= amount;
   if (score <= 0) { // reached zero
-    gameWin();
+    // gameWin();
     score = 0;
   }
   document.getElementById('score').innerHTML = score;
