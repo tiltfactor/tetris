@@ -29,8 +29,16 @@ function countdown(minutes) {
     var mins = minutes;
     function tick() {
       gameTimeOut -= 1;
-      console.log (gameTimeOut);
         var counter = document.getElementById("timer");
+
+        //Flashes the timer if there's 15 sec or less left
+        if (gameTimeOut <= 15) {
+          $('#timer').addClass("pulse");
+          setTimeout(function(){
+          $('#timer').removeClass("pulse");
+        },100); 
+        }
+
         var current_minutes = mins-1
         seconds--;
         counter.innerHTML =
@@ -748,6 +756,7 @@ function updatePiece() {
   // if (timeNow - startTime > gameTimeOut) {
   // console.log (gameTimeOut);
   if (gameTimeOut <= 0) {
+    $('#timer').addClass("time-up"); //display end timer
     gameOver();
   }
   var ctx = document.getElementById('animated_canvas').getContext('2d');
