@@ -115,6 +115,7 @@ var startTime = new Date();
           $("#timeout-countdown").html(counter);
 
           if (counter <= 0) {
+          	$("a.ui-dialog-titlebar-close.ui-corner-all").css("visibility","visible");
             window.clearInterval(self.countdown);
           }
 
@@ -123,5 +124,7 @@ var startTime = new Date();
     };
 
     TimeoutDialog.init();
+    
+   
   };
 }(window.jQuery);
