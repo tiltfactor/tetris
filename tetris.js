@@ -55,7 +55,8 @@ function countdown(minutes) {
                 countdown(mins - 1); 
               }, 1000);
  
-            }
+            } 
+            
         }
     }
     tick();
@@ -302,8 +303,13 @@ var setPause = function(isendgame) {
   mouseControlInterval = "";
   //document.title = "Tetris! GAME OVER";
   if (!isendgame) { drawPaused(); document.title="Tetris! PAUSED";
-  }
-  else {takeToSurvey()};
+  } else {
+    drawMessage("Time Up", 1.45);
+  	gameIsOver = true;
+  	setPause(true);
+  	sendLog("time up");
+  	takeToSurvey()
+  };
   paused = true;
   pausedBecauseLostFocus = false; // default this to false
 
@@ -534,7 +540,7 @@ function gameOver() {
   drawMessage("Game Over", 1.45);
   gameIsOver = true;
   setPause(true);
-  sendLog("game over");
+  sendLog("game over time="+gameTimeOut);
   //Cleanup
 }
 
@@ -948,6 +954,8 @@ function sendLog(details) {
     return;
   }
 
+  logEvent("condition", condition);
+  logEvent("qid", qualtricsID);
   logEvent("quit", details);
 
   var parts = document.URL.split("/");
