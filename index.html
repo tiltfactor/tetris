@@ -75,7 +75,7 @@
 			Please note that your gameplay will be recorded for research purposes.
 			Thanks, and have fun!
 		</p>
-		<a href="game.html">Play Game</a>
+		<span id="play-game-link"></span>
 		 <div>
   </div>
 
@@ -85,6 +85,7 @@
 		var startTime = new Date();
 		//send message to screen before showing instructions
 		var condition;
+		var qualtricsID = "NID";
 		var hasCond = false;
 		var URL = window.location.href;
 		console.log(URL);
@@ -105,6 +106,9 @@
 
     	for (j in variables) {
     		var i = variables[j].split("=");
+    		if (i[0] === "qid"){
+    			qualtricsID = i[1];
+    		}
     		if (i[0] == "c") {
     			condition = i[1];
     			hasCond = true;
@@ -123,6 +127,10 @@
 
     	if (condition == "s")
     		mymsg = msg_s;
+    	
+    	console.log ("QID is "+qualtricsID);
+    	
+    	document.getElementById("play-game-link").innerHTML = "Play Game".link("game.html?qid="+qualtricsID);
 
 		$.timeoutDialog({timeout: 1, countdown: 20, msg: mymsg});
 
