@@ -21,7 +21,7 @@
 // ============================================================================
 
 //countdown timer
-
+var gameIsOver = false;
 var gameTimeOut = 300;
 var condition="NC";
 	var qualtricsID = "NID";
@@ -71,7 +71,7 @@ function countdown(minutes) {
         seconds--;
         counter.innerHTML =
         current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
-        if( seconds > 0 ) {
+        if( seconds > 0 && !gameIsOver) {
             setTimeout(tick, 1000);
         } else {
  
@@ -86,7 +86,9 @@ function countdown(minutes) {
             
         }
     }
-    tick();
+    if(!gameIsOver){
+    	tick();
+    }
 }
 
 var TETRIS = new function () { // namespacing
@@ -94,7 +96,7 @@ var TETRIS = new function () { // namespacing
 	// var startTime = new Date().getTime();
 	// console.log(startTime);
 	// var gameTimeOut = 300000; 
-  var gameIsOver = false;
+
 
 function random_det(seed) {
   return function() {
