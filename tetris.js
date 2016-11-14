@@ -27,6 +27,7 @@ var gameTimeOut = 300;
 function countdown(minutes) {
     var seconds = 60;
     var mins = minutes;
+    gameTimeOut = mins * seconds;
     function tick() {
       gameTimeOut -= 1;
         var counter = document.getElementById("timer");
@@ -36,7 +37,7 @@ function countdown(minutes) {
           $('#timer').addClass("pulse");
           setTimeout(function(){
           $('#timer').removeClass("pulse");
-        },100); 
+        },200); 
         }
 
         var current_minutes = mins-1
