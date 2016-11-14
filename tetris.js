@@ -590,7 +590,7 @@ function takeToSurvey() {
               text: "Take Survey",
               id: "take_survey",
               click: function() {
-                window.location.href='https://www.google.com?c='+condition+'&qid='+qualtricsID;
+                window.location.href='https://dartmouth.co1.qualtrics.com/SE/?SID=SV_9BsyU1bs3q4MoER&c='+condition+'&qid='+qualtricsID;
               }
             }
         }
