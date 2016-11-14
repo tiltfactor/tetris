@@ -23,6 +23,33 @@
 //countdown timer
 
 var gameTimeOut = 300;
+var condition="NC";
+	var qualtricsID = "NID";
+	var hasCond = false;
+	var URL = window.location.href;
+	console.log(URL);
+	
+	// var URL = "tiltfactor1.dartmouth.edu/test/tetris?c=n&variable2=something&variable3=something";
+	if (URL.includes("?")) {
+		var breakURL = URL.split("?");
+		if (breakURL[1].includes("&")) {
+			var variables = breakURL[1].split("&");
+		}
+		else {
+			var variables = [breakURL[1]];
+		}
+	}
+
+	for (j in variables) {
+		var i = variables[j].split("=");
+		if (i[0] === "qid"){
+			qualtricsID = i[1];
+		}
+		if (i[0] == "c") {
+			condition = i[1];
+			hasCond = true;
+		}
+	}
 
 function countdown(minutes) {
     var seconds = 60;
@@ -306,9 +333,8 @@ var setPause = function(isendgame) {
   } else {
     drawMessage("Time Up", 1.45);
   	gameIsOver = true;
-  	setPause(true);
   	sendLog("time up");
-  	takeToSurvey()
+  	takeToSurvey();
   };
   paused = true;
   pausedBecauseLostFocus = false; // default this to false
@@ -547,33 +573,6 @@ function gameOver() {
 function takeToSurvey() {
   // if (window.confirm('Game is over. Click "Ok" to take survey'))
   //     window.location.href='https://www.google.com';
-	var condition;
-	var qualtricsID = "NID";
-	var hasCond = false;
-	var URL = window.location.href;
-	console.log(URL);
-	
-	// var URL = "tiltfactor1.dartmouth.edu/test/tetris?c=n&variable2=something&variable3=something";
-	if (URL.includes("?")) {
-		var breakURL = URL.split("?");
-		if (breakURL[1].includes("&")) {
-			var variables = breakURL[1].split("&");
-		}
-		else {
-			var variables = [breakURL[1]];
-		}
-	}
-
-	for (j in variables) {
-		var i = variables[j].split("=");
-		if (i[0] === "qid"){
-			qualtricsID = i[1];
-		}
-		if (i[0] == "c") {
-			condition = i[1];
-			hasCond = true;
-		}
-	}
   $('<div id="timeout">' + 'Game is over. Please take our survey.'+'</div>').appendTo('body')
         .dialog({
           modal: true,
