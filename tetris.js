@@ -207,7 +207,7 @@ function updateSizing() {
   //ph.style.width = ((xoff*2 + xsize*10 + gapsize*9)+180)+"px";
 
   controls.style.marginLeft = (bc.width + 10)+"px";
-  controls.style.marginTop = (0.25 * bc.height) +"px";
+  controls.style.marginTop = (0.5 * bc.height) +"px";
 
   // document.getElementById('instructions').style.marginLeft = (bc.width)+"px";
   // document.getElementById('instr').ontouchmove = function (e) { // prevent touchmove default scroll behavior on all but the instr text section
