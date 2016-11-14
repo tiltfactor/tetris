@@ -236,7 +236,7 @@ function updateSizing() {
   drawBoard(board,ctx1);
   updatePiece();
   updateShadow();
-  if (paused) drawPaused();
+  if (paused && !gameIsOver) drawPaused();
 }
 
 function clearRowCheck(startrow, numrowsdown) {
@@ -333,9 +333,7 @@ var setPause = function(isendgame) {
   //document.title = "Tetris! GAME OVER";
   if (!isendgame) { drawPaused(); document.title="Tetris! PAUSED";
   } else {
-    drawMessage("Time Up", 1.45);
-  	gameIsOver = true;
-  	sendLog("time up");
+	console.log("setPause takeToSurvey triggered");
   	takeToSurvey();
   };
   paused = true;
@@ -565,10 +563,15 @@ function clearContext(ctx, width, height) {
 // }
 
 function gameOver() {
-  drawMessage("Game Over", 1.45);
+  console.log(gameTimeOut);
+  if(gameTimeOut > 1){
+  	drawMessage("Game Over", 1.45);
+  } else {
+  	drawMessage("Time's Up", 1.45);
+  }
   gameIsOver = true;
   setPause(true);
-  sendLog("game over time="+gameTimeOut);
+  sendLog("game over time left"+gameTimeOut);
   //Cleanup
 }
 
@@ -609,6 +612,7 @@ function next() {
   drawNext(document.getElementById('next_canvas').getContext('2d'));
   
   if (kick()) { //need to modify
+  	console.log("kick gameOver triggered");
     gameOver();
   }
   updateShadow();
@@ -792,6 +796,7 @@ function updatePiece() {
   // console.log (gameTimeOut);
   if (gameTimeOut <= 0) {
     $('#timer').addClass("time-up"); //display end timer
+    console.log("updatePiece gameOver triggered");
     gameOver();
   }
   var ctx = document.getElementById('animated_canvas').getContext('2d');
