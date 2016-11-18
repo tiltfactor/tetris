@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Tetris</title>
+		<title>Spatial Game</title>
 		<link rel="stylesheet" href="timeout-dialog.css" type="text/css" media="screen, projection" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"></script>
@@ -33,10 +33,9 @@
 	</head>
 	<body>
 
-		<h1>Tetris</h1>
-		<h2>Rules</h2>
+		<h2>Instructions</h2>
 		<p>
-			In Tetris, you are trying to arrange the falling blocks to fill each row completely.
+			In this game, you are trying to arrange the falling blocks to fill each row completely.
 			You may move and rotate each piece as it falls. When it reaches the bottom (or another piece)
 			it will stay there, and another piece will start to fall. The box to the right of the board
 			displays the next piece. 
@@ -73,7 +72,6 @@
 		</table>
 		<p>
 			Please note that your gameplay will be recorded for research purposes.
-			Thanks, and have fun!
 		</p>
 		<span id="play-game-link"></span>
 		 <div>
@@ -89,8 +87,8 @@
 		var hasCond = false;
 		var URL = window.location.href;
 		console.log(URL);
-		var msg_n = "As you may know there has been some controversy about whether there are gender differences in spatial ability. The game you are about to play has NOT been shown to produce gender differences.";
-		var msg_s = "As you may know there has been some controversy about whether there are gender differences in spatial ability. The game you are about to play has been shown to produce gender differences.";
+		var msg_n = "As you may know, there has been some controversy about whether there are gender differences in spatial ability. The game you are about to play has NOT been shown to produce gender differences.";
+		var msg_s = "As you may know, there has been some controversy about whether there are gender differences in spatial ability. The game you are about to play has been shown to produce gender differences.";
 		var mymsg;
 
 		// var URL = "tiltfactor1.dartmouth.edu/test/tetris?c=n&variable2=something&variable3=something";
