@@ -9,20 +9,32 @@
 			<p>Choose the statistics you would like calculated for each board.</p>
 			<table>
 				<tr>
-					<td><input type="checkbox" name="func" value="countCells" /></td>
+					<td><input type="checkbox" name="func" value="countCells" disabled/></td>
 					<td>Count cells</td>
 				</tr>
 				<tr>
-					<td><input type="checkbox" name="func" value="countHoles" /></td>
+					<td><input type="checkbox" name="func" value="countHoles" disabled/></td>
 					<td>Count holes</td>
 				</tr>
 				<tr>
 					<td><input type="checkbox" name="func" value="highestPiece" /></td>
-					<td>Highest piece</td>
+					<td>Highest piece (whole game)</td>
 				</tr>
 				<tr>
 					<td><input type="checkbox" name="func" value="averageHeight" /></td>
-					<td>Average height</td>
+					<td>Average board height (highest whole game)</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="nonboard" value="lineClears" checked disabled/></td>
+					<td>Line clears</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="nonboard" value="duration" checked disabled/></td>
+					<td>Duration</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="nonboard" value="userID" checked disabled/></td>
+					<td>User ID</td>
 				</tr>
 			</table>
 			<p>Choose the separators you would like for the CSV.
